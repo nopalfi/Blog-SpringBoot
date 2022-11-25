@@ -23,10 +23,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post findById(Long id) {
 
-        Post find = postRepository.findById(id).orElseThrow(
+        return postRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Post", "ID", id)
         );
-        return find;
     }
 
     @Override
@@ -44,6 +43,7 @@ public class PostServiceImpl implements PostService {
         );
         post.setTitle(find.getTitle());
         post.setContent(find.getContent());
+        post.setCreatedAt(find.getCreatedAt());
         post.setAuthorId(find.getAuthorId());
         LocalDateTime localDateTime = LocalDateTime.now();
         post.setModifiedAt(localDateTime);

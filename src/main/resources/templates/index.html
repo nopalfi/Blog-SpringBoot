@@ -19,6 +19,13 @@
         </ul>
     </div>
 </header>
+
+<article th:each="post: ${posts}">
+    <a th:href="'post/'+${post.getId}"><h2 class="blog-post-title mb-1" th:text="${post.getTitle}">Blog Title</h2></a>
+    <p class="blog-post-meta mb-1" th:text="'Created at: '+${post.getCreatedAt}">Created At:</p>
+    <hr>
+    <p th:text="${post.getContent}">Content</p>
+</article>
 <script th:src="@{webjars/bootstrap/5.2.2/js/bootstrap.min.js}"></script>
 </body>
 </html>
