@@ -12,7 +12,7 @@ public interface PostService {
 
     Post findById(Long id) throws ResourceNotFoundException;
 
-    Post addPost(Long authorId, Post post);
+    Post addPost(Post post);
 
     Post updatePost(Long id, Post post);
 

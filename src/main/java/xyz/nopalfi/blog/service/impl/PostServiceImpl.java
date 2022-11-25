@@ -29,10 +29,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post addPost(Long authorId, Post post) {
+    public Post addPost(Post post) {
         LocalDateTime createdAt = LocalDateTime.now();
         post.setCreatedAt(createdAt);
-        post.setAuthorId(authorId);
         return postRepository.save(post);
     }
 
