@@ -43,7 +43,6 @@ public class PostServiceImpl implements PostService {
         post.setTitle(find.getTitle());
         post.setContent(find.getContent());
         post.setCreatedAt(find.getCreatedAt());
-        post.setAuthorId(find.getAuthorId());
         LocalDateTime localDateTime = LocalDateTime.now();
         post.setModifiedAt(localDateTime);
         return post;

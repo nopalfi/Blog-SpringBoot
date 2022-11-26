@@ -3,7 +3,9 @@ package xyz.nopalfi.blog.component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import xyz.nopalfi.blog.entity.Account;
 import xyz.nopalfi.blog.entity.Post;
+import xyz.nopalfi.blog.service.impl.AccountServiceImpl;
 import xyz.nopalfi.blog.service.impl.PostServiceImpl;
 
 import java.time.LocalDateTime;
@@ -12,13 +14,30 @@ import java.time.LocalDateTime;
 public class PopulateEntity implements CommandLineRunner {
     @Autowired
     private PostServiceImpl postService;
+    @Autowired
+    private AccountServiceImpl accountService;
     @Override
     public void run(String... args) throws Exception {
-        Post post1 = new Post(1L, "Belajar Java", "Belajar Pemrograman dengan bahasa Java - Spring Boot", LocalDateTime.now(), null, 1L);
-        Post post2 = new Post(2L, "Belajar Python", "Belajar Pemrograman dengan bahasa Python - Flask", LocalDateTime.now(), null, 1L);
-        Post post3 = new Post(3L, "Belajar PHP", "Belajar Pemrograman dengan bahasa PHP - Laravel", LocalDateTime.now(), null, 1L);
+        Account nopalfi = new Account();
+        nopalfi.setFullName("nopalfi");
+        nopalfi.setUsername("nopalfi");
+        nopalfi.setPassword("admin");
+        nopalfi.setEmail("nopalfahriislami@yahoo.com");
+        Post post1 = new Post();
+        post1.setTitle("Belajar Java");
+        post1.setContent("Belajar Bahasa Pemrograman dengan Java - Spring Boot");
+        post1.setCreatedAt(LocalDateTime.now());
+        post1.setAccount(nopalfi);
+        Post post2 = new Post();
+        post2.setTitle("Belajar Python");
+        post2.setContent("Belajar Bahasa Pemrograman dengan Python - Flask");
+        post2.setCreatedAt(LocalDateTime.now());
+        post2.setAccount(nopalfi);
+        nopalfi.getPosts().add(post1);
+        nopalfi.getPosts().add(post2);
+        accountService.addAcount(nopalfi);
         postService.addPost(post1);
         postService.addPost(post2);
-        postService.addPost(post3);
+//        accountService.addAcount(admin);
     }
 }

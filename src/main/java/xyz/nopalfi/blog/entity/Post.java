@@ -1,27 +1,27 @@
 package xyz.nopalfi.blog.entity;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
+@RequiredArgsConstructor
 @NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long postId;
 
+    @NotNull
     private String title;
-
+    @NotNull
     private String content;
 
     @NotNull
@@ -29,6 +29,7 @@ public class Post {
 
     private LocalDateTime modifiedAt;
 
-    @NotNull
-    private Long authorId;
+    @ManyToOne
+    private Account account;
+
 }

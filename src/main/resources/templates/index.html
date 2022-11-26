@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Title</title>
+    <title>SpringBoot</title>
     <link rel="stylesheet" th:href="@{webjars/bootstrap/5.2.2/css/bootstrap.min.css}">
 </head>
 <body>
@@ -20,11 +20,12 @@
     </div>
 </header>
 
-<article class="mt-3 w-75 m-auto mb-1" th:each="post: ${posts}">
-    <a class="text-decoration-none" th:href="'post/'+${post.getId}"><h2 class="blog-post-title mb-1" th:text="${post.getTitle}">Blog Title</h2></a>
-    <p class="blog-post-meta mb-1" th:text="'Created at: '+${#temporals.format(post.getCreatedAt, 'yyyy-MM-dd HH:mm')}">Created At:</p>
+<article class="mt-3 w-75 m-auto mb-lg-5" th:each="post: ${posts}">
+    <a class="text-decoration-none" th:href="'post/'+${post.getPostId}"><h2 class="blog-post-title mb-1" th:text="${post.getTitle}">Blog Title</h2></a>
+    <p class="blog-post-meta mb-1" th:text="'Created at: '+${#temporals.format(post.getCreatedAt, 'dd-MM-yyyy HH:mm')}">Created At:</p>
+    <p class="blog-post-meta" th:text="'Posted by: '+${post.getAccount.getUsername}">Posted By </p>
     <hr>
-    <p th:text="${post.getContent}">Content</p>
+    <p th:text="${post.getContent}" class="mb-3 mt-3">Content</p>
 </article>
 <script th:src="@{webjars/bootstrap/5.2.2/js/bootstrap.min.js}"></script>
 </body>

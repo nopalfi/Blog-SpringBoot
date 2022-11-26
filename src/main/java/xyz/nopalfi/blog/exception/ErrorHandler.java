@@ -14,4 +14,10 @@ public class ErrorHandler {
         return e;
     }
 
+    @ExceptionHandler(ResourceAlreadyExistException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResourceAlreadyExistException resourceAlreadyExistException(ResourceAlreadyExistException e) {
+        return e;
+    }
+
 }
