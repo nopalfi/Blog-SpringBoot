@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SpringBoot</title>
+    <title th:text="${post.getTitle}+' - Springboot Blog'">SpringBoot</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}">
     <script th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
 </head>
@@ -13,7 +13,7 @@
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <h1 class="text-dark"><a href="/" class="text-decoration-none">BlogApplication</a></h1>
         </div>
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-evenly mb-md-0">
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li><a href="/" class="nav-link px-2 link-secondary">Overview</a></li>
             <li><a th:href="@{/addpost}" class="nav-link px-2 link-dark">Add New Post</a></li>
             <li><a href="/" class="nav-link px-2 link-dark">Customers</a></li>
@@ -21,12 +21,20 @@
     </div>
 </header>
 
-<article class="mt-3 w-75 m-auto mb-lg-5" th:each="post: ${posts}">
-    <a class="text-decoration-none" th:href="'post/'+${post.getPostId}"><h2 class="blog-post-title mb-1" th:text="${post.getTitle}">Blog Title</h2></a>
+<article class="mt-3 w-75 m-auto mb-lg-5">
+    <a class="text-decoration-none" th:href="'/post/'+${post.getPostId}"><h2 class="blog-post-title mb-1" th:text="${post.getTitle}">Blog Title</h2></a>
     <p class="blog-post-meta mb-1" th:text="'Created at: '+${#temporals.format(post.getCreatedAt, 'dd-MM-yyyy HH:mm')}">Created At:</p>
     <p class="blog-post-meta" th:text="'Posted by: '+${post.getAccount.getUsername}">Posted By </p>
     <hr>
     <p th:text="${post.getContent}" class="mb-3 mt-3">Content</p>
+    <br>
+    <hr>
+    <form th:action="@{/post}" method="post" th:object="${post}">
+        <input type="hidden" name="post" th:value="${post}">
+        <button type="submit" name="action" value="edit" class="btn btn-primary">Edit</button>
+        <button type="submit" name="action" value="delete" class="btn btn-warning">Delete</button>
+    </form>
+
 </article>
 
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
@@ -44,6 +52,5 @@
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
     </ul>
 </footer>
-
 </body>
 </html>
