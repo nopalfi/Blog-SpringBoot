@@ -39,9 +39,9 @@ public class AccountServiceImpl implements AccountService {
         account.setPassword(updateAcc.getPassword());
         account.setEmail(updateAcc.getEmail());
         account.setFullName(updateAcc.getFullName());
-        account.setPosts(updateAcc.getPosts());
         return accountRepository.save(account);
     }
+
 
     @Override
     public List<Account> getAll() {

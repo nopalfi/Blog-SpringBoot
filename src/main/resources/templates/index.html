@@ -24,6 +24,7 @@
 <article class="mt-3 w-75 m-auto mb-lg-5" th:each="post: ${posts}">
     <a class="text-decoration-none" th:href="'post/'+${post.getPostId}"><h2 class="blog-post-title mb-1" th:text="${post.getTitle}">Blog Title</h2></a>
     <p class="blog-post-meta mb-1" th:text="'Created at: '+${#temporals.format(post.getCreatedAt, 'dd-MM-yyyy HH:mm')}">Created At:</p>
+    <p th:if="${post.getModifiedAt() != null}" class="blog-post-meta mb-1" th:text="'Modified at: '+${#temporals.format(post.getModifiedAt(), 'dd-MM-yyyy HH:mm')}">Modified At:</p>
     <p class="blog-post-meta" th:text="'Posted by: '+${post.getAccount.getUsername}">Posted By </p>
     <hr>
     <p th:text="${post.getContent}" class="mb-3 mt-3">Content</p>

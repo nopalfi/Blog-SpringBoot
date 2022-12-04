@@ -24,16 +24,14 @@
 <article class="mt-3 w-75 m-auto mb-lg-5">
     <a class="text-decoration-none" th:href="'/post/'+${post.getPostId}"><h2 class="blog-post-title mb-1" th:text="${post.getTitle}">Blog Title</h2></a>
     <p class="blog-post-meta mb-1" th:text="'Created at: '+${#temporals.format(post.getCreatedAt, 'dd-MM-yyyy HH:mm')}">Created At:</p>
+    <p th:if="${post.getModifiedAt() != null}" class="blog-post-meta mb-1" th:text="'Modified at: '+${#temporals.format(post.getModifiedAt(), 'dd-MM-yyyy HH:mm')}">Modified At:</p>
     <p class="blog-post-meta" th:text="'Posted by: '+${post.getAccount.getUsername}">Posted By </p>
     <hr>
     <p th:text="${post.getContent}" class="mb-3 mt-3">Content</p>
     <br>
     <hr>
-    <form th:action="@{/post}" method="post" th:object="${post}">
-        <input type="hidden" name="post" th:value="${post}">
-        <button type="submit" name="action" value="edit" class="btn btn-primary">Edit</button>
-        <button type="submit" name="action" value="delete" class="btn btn-warning">Delete</button>
-    </form>
+    <a th:href="'/updatepost/'+${postId}"> <button type="button" name="action" value="edit" class="btn btn-secondary">Edit</button></a>
+    <a th:href="'/deletepost/'+${postId}"> <button type="button" name="action" value="delete" class="btn btn-warning">Delete</button></a>
 
 </article>
 

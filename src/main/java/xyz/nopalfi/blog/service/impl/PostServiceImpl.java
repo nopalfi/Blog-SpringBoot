@@ -2,6 +2,7 @@ package xyz.nopalfi.blog.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.nopalfi.blog.entity.Account;
 import xyz.nopalfi.blog.entity.Post;
 import xyz.nopalfi.blog.exception.ResourceNotFoundException;
 import xyz.nopalfi.blog.repository.PostRepository;
@@ -15,6 +16,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private AccountServiceImpl accountService;
     @Override
     public List<Post> getPosts() {
         return postRepository.findAll();
@@ -40,12 +44,11 @@ public class PostServiceImpl implements PostService {
         Post find = postRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Post", "ID", id)
         );
-        post.setTitle(find.getTitle());
-        post.setContent(find.getContent());
-        post.setCreatedAt(find.getCreatedAt());
+        find.setTitle(post.getTitle());
+        find.setContent(post.getContent());
         LocalDateTime localDateTime = LocalDateTime.now();
-        post.setModifiedAt(localDateTime);
-        return post;
+        find.setModifiedAt(localDateTime);
+        return postRepository.save(find);
     }
 
     @Override

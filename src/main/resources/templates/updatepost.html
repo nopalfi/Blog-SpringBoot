@@ -21,18 +21,20 @@
   </div>
 </header>
 <div class="w-75 m-auto">
-  <form name="form" th:action="@{/post}", method="post" th:object="${post}">
+  <form name="form" th:action="'/updatepost/'+${post.getPostId}", method="post" th:object="${post}">
+    <div th:if="${action == 'edit'}" class="alert alert-info">Coming from edit text</div>
     <label>Title</label>
     <br>
-    <input class="form-control" type="text" th:field="*{title}">
+    <input th:if="${action == 'edit'}" class="form-control" type="text" th:field="*{title}" th:value="${post.title}">
+    <input th:unless="${action == 'edit'}" class="form-control" type="text" th:field="*{title}">
     <br>
     <label>Content</label>
     <br>
-    <textarea class="form-control" th:field="*{content}"></textarea>
+    <textarea th:if="${action == 'edit'}" class="form-control" type="text" th:field="*{content}" th:value="${post.content}"></textarea>
+    <textarea th:unless="${action == 'edit'}" class="form-control" th:field="*{content}"></textarea>
     <br>
-    <button class="btn btn-primary" style="width: 100px" type="submit">Add Post</button>
+    <button class="btn btn-primary" style="width: 100px" type="submit">Edit Post</button>
     <button class="btn btn-secondary" style="width: 100px" type="reset">Clear</button>
-  </form>
   </form>
 </div>
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">

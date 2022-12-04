@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import xyz.nopalfi.blog.entity.Account;
 import xyz.nopalfi.blog.entity.Post;
 import xyz.nopalfi.blog.service.impl.AccountServiceImpl;
+import xyz.nopalfi.blog.service.impl.PostServiceImpl;
 import xyz.nopalfi.blog.service.impl.RestClientServiceImpl;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Logger;
 
 @Controller
 public class WebController {
@@ -20,6 +22,9 @@ public class WebController {
 
     @Autowired
     private AccountServiceImpl accountService;
+
+    @Autowired
+    private PostServiceImpl postService;
 
     @RequestMapping(value = "/")
     public String index(Model model) {
@@ -34,10 +39,25 @@ public class WebController {
         return "post";
     }
 
-    @RequestMapping(value = "/addpost")
+    @GetMapping(value = "/addpost")
     public String addPost(Model model) {
         model.addAttribute("post", new Post());
         return "addpost";
+    }
+    @PostMapping(value = "/updatepost/{id}")
+    public String updatePostCommit(Post post, @PathVariable Long id, Model model) {
+        Account nopalfi = accountService.findByUsername("nopalfi");
+        post.setAccount(nopalfi);
+        postService.updatePost(id, post);
+        return "redirect:/";
+    }
+
+    @GetMapping("/updatepost/{id}")
+    public String updatePost(@PathVariable Long id, Model model) {
+        Post post = restClientService.findById(id);
+        model.addAttribute("post", post);
+        model.addAttribute("action", "edit");
+        return "updatepost";
     }
 
     @PostMapping("/post")
@@ -50,15 +70,10 @@ public class WebController {
         return "redirect:/";
     }
 
-    @PostMapping(value = "/updatepost", params = "action=edit")
-    public String updatePost(@ModelAttribute("post") Post post, Model model) {
-        model.addAttribute("post", post);
-        return "addpost";
-    }
 
-    @PostMapping(value = "/deletepost", params = "action=delete")
-    public String deletePost(@ModelAttribute("post") Post post, Model model) {
-        model.addAttribute("post", post);
+    @GetMapping(value = "/deletepost/{postId}")
+    public String deletePost(@PathVariable Long postId, Model model) {
+        postService.deletePost(postId);
         return "redirect:/";
     }
 }

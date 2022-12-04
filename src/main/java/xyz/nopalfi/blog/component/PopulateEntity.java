@@ -33,11 +33,8 @@ public class PopulateEntity implements CommandLineRunner {
         post2.setContent("Belajar Bahasa Pemrograman dengan Python - Flask");
         post2.setCreatedAt(LocalDateTime.now());
         post2.setAccount(nopalfi);
-        nopalfi.getPosts().add(post1);
-        nopalfi.getPosts().add(post2);
         accountService.addAcount(nopalfi);
         postService.addPost(post1);
         postService.addPost(post2);
-//        accountService.addAcount(admin);
     }
 }
