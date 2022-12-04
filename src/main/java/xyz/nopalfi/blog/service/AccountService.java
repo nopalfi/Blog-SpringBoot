@@ -11,4 +11,6 @@ public interface AccountService {
     Account updateAccount(Long accountId, Account account);
     List<Account> getAll();
     Account findById(Long accountId);
+
+    Account findByUsername(String username);
 }

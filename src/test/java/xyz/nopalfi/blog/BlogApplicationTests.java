@@ -24,7 +24,6 @@ class BlogApplicationTests {
 
     @Test
     public void getPostsTest() {
-
     }
 
 }

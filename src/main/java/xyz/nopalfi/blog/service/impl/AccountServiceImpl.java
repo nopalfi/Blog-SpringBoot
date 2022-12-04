@@ -8,6 +8,7 @@ import xyz.nopalfi.blog.repository.AccountRepository;
 import xyz.nopalfi.blog.service.AccountService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -38,9 +39,9 @@ public class AccountServiceImpl implements AccountService {
         account.setPassword(updateAcc.getPassword());
         account.setEmail(updateAcc.getEmail());
         account.setFullName(updateAcc.getFullName());
-        account.setPosts(updateAcc.getPosts());
         return accountRepository.save(account);
     }
+
 
     @Override
     public List<Account> getAll() {
@@ -52,5 +53,11 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.findById(accountId).orElseThrow(
                 () -> new ResourceNotFoundException("Account", "ID", accountId)
         );
+    }
+
+    @Override
+    public Account findByUsername(String username) {
+        Account account = accountRepository.findByUsername(username);
+        return accountRepository.findByUsername(username);
     }
 }
