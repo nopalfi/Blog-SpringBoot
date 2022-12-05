@@ -2,7 +2,6 @@ package xyz.nopalfi.blog.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.nopalfi.blog.entity.Account;
 import xyz.nopalfi.blog.entity.Post;
 import xyz.nopalfi.blog.exception.ResourceNotFoundException;
 import xyz.nopalfi.blog.repository.PostRepository;
@@ -17,8 +16,6 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRepository;
 
-    @Autowired
-    private AccountServiceImpl accountService;
     @Override
     public List<Post> getPosts() {
         return postRepository.findAll();
