@@ -23,6 +23,11 @@ public class PopulateEntity implements CommandLineRunner {
         nopalfi.setUsername("nopalfi");
         nopalfi.setPassword("admin");
         nopalfi.setEmail("nopalfahriislami@yahoo.com");
+        Account user = new Account();
+        user.setFullName("user");
+        user.setUsername("user");
+        user.setPassword("user");
+        user.setEmail("user@gmail.com");
         Post post1 = new Post();
         post1.setTitle("Belajar Java");
         post1.setContent("Belajar Bahasa Pemrograman dengan Java - Spring Boot");
@@ -34,6 +39,7 @@ public class PopulateEntity implements CommandLineRunner {
         post2.setCreatedAt(LocalDateTime.now());
         post2.setAccount(nopalfi);
         accountService.addAcount(nopalfi);
+        accountService.addAcount(user);
         postService.addPost(post1);
         postService.addPost(post2);
     }
