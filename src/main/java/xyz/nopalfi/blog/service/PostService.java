@@ -1,6 +1,5 @@
 package xyz.nopalfi.blog.service;
 
-import org.springframework.stereotype.Service;
 import xyz.nopalfi.blog.entity.Post;
 import xyz.nopalfi.blog.exception.ResourceNotFoundException;
 

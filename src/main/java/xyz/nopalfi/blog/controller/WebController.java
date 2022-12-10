@@ -10,18 +10,11 @@ import xyz.nopalfi.blog.entity.Account;
 import xyz.nopalfi.blog.entity.Post;
 import xyz.nopalfi.blog.service.impl.AccountServiceImpl;
 import xyz.nopalfi.blog.service.impl.PostServiceImpl;
-import xyz.nopalfi.blog.service.impl.RestClientServiceImpl;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.logging.Logger;
 
 @Controller
 public class WebController {
-
-    @Autowired
-    private RestClientServiceImpl restClientService;
 
     @Autowired
     private AccountServiceImpl accountService;
@@ -34,7 +27,6 @@ public class WebController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("posts", postService.getPosts());
         model.addAttribute("authName", auth.getName());
-        LocalDateTime localDateTime = LocalDateTime.now();
         return "index";
     }
 
@@ -54,7 +46,7 @@ public class WebController {
         return "addpost";
     }
     @PostMapping(value = "/updatepost/{id}")
-    public String updatePostCommit(Post post, @PathVariable Long id, Model model) {
+    public String updatePostCommit(Post post, @PathVariable Long id) {
         Account nopalfi = accountService.findByUsername("nopalfi");
         post.setAccount(nopalfi);
         postService.updatePost(id, post);
@@ -84,7 +76,7 @@ public class WebController {
 
 
     @GetMapping(value = "/deletepost/{postId}")
-    public String deletePost(@PathVariable Long postId, Model model) {
+    public String deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
         return "redirect:/";
     }

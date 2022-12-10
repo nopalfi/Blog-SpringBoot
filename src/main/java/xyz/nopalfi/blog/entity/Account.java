@@ -19,7 +19,7 @@ import org.springframework.validation.annotation.Validated;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
     private String fullName;
     private String username;
