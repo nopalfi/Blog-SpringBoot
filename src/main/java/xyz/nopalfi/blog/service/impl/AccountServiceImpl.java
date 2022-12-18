@@ -12,8 +12,12 @@ import java.util.List;
 @Service
 public class AccountServiceImpl implements AccountService {
 
+    private final AccountRepository accountRepository;
+
     @Autowired
-    private AccountRepository accountRepository;
+    public AccountServiceImpl(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     public Account addAcount(Account account) {
@@ -56,6 +60,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findByUsername(String username) {
-        return accountRepository.findByUsername(username);
+        return accountRepository.findByUsername(username).orElseThrow(
+                () -> new ResourceNotFoundException("Account", "Username", username)
+        );
     }
 }

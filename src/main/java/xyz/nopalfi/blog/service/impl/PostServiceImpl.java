@@ -7,14 +7,19 @@ import xyz.nopalfi.blog.exception.ResourceNotFoundException;
 import xyz.nopalfi.blog.repository.PostRepository;
 import xyz.nopalfi.blog.service.PostService;
 
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
 public class PostServiceImpl implements PostService {
 
+    private final PostRepository postRepository;
+
     @Autowired
-    private PostRepository postRepository;
+    public PostServiceImpl(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
 
     @Override
     public List<Post> getPosts() {
@@ -23,7 +28,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post findById(Long id) {
-
         return postRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Post", "ID", id)
         );
@@ -31,8 +35,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post addPost(Post post) {
-        LocalDateTime createdAt = LocalDateTime.now();
-        post.setCreatedAt(createdAt);
         return postRepository.save(post);
     }
 
@@ -43,8 +45,7 @@ public class PostServiceImpl implements PostService {
         );
         find.setTitle(post.getTitle());
         find.setContent(post.getContent());
-        LocalDateTime localDateTime = LocalDateTime.now();
-        find.setModifiedAt(localDateTime);
+        find.setModifiedAt(ZonedDateTime.now(ZoneId.of("UTC")).toEpochSecond());
         return postRepository.save(find);
     }
 

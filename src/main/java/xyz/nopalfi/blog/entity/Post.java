@@ -1,28 +1,23 @@
 package xyz.nopalfi.blog.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
 import jakarta.persistence.*;
-import org.springframework.validation.annotation.Validated;
-
-import java.time.LocalDateTime;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
-@Validated
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String content;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private Long createdAt;
+    private Long modifiedAt;
 
     @ManyToOne
     private Account account;

@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${post.getTitle}+' - Springboot Blog'">SpringBoot</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}">
-    <script th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
+    <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/moment/2.29.4/moment.js}"></script>
 </head>
 <body>
 <header class="p-3 text-bg-light">
@@ -24,11 +25,11 @@
 
 <article class="mt-3 w-75 m-auto mb-lg-5">
     <a class="text-decoration-none" th:href="'/post/'+${post.getPostId}"><h2 class="blog-post-title mb-1" th:text="${post.getTitle}">Blog Title</h2></a>
-    <p class="blog-post-meta mb-1" th:text="'Created at: '+${#temporals.format(post.getCreatedAt, 'dd-MM-yyyy HH:mm')}">Created At:</p>
-    <p th:if="${post.getModifiedAt() != null}" class="blog-post-meta mb-1" th:text="'Modified at: '+${#temporals.format(post.getModifiedAt(), 'dd-MM-yyyy HH:mm')}">Modified At:</p>
+    <script th:inline="javascript">document.write('<span class="blog-post-meta mb-1">Published by: ',moment.unix([[${post.getCreatedAt}]]).fromNow(),'</span>');</script>
+    <script th:if="${post.getModifiedAt() != null}" th:inline="javascript">document.write('<span class="blog-post-meta mb-1">Modified by: ',moment.unix([[${post.getModifiedAt}]]).fromNow(),'</span>');</script>
     <p class="blog-post-meta" th:text="'Posted by: '+${post.getAccount.getUsername}">Posted By </p>
     <hr>
-    <p th:text="${post.getContent}" class="mb-3 mt-3">Content</p>
+    <p th:text="${post.getContent}" class="mb-3 mt-3" style="text-align: justify">Content</p>
     <br>
     <hr>
     <a th:href="'/updatepost/'+${postId}"> <button type="button" name="action" value="edit" class="btn btn-secondary">Edit</button></a>

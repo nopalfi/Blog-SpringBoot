@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SpringBoot</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}">
-    <script th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
+    <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/moment/2.29.4/moment.js}"></script>
 </head>
 <body>
 <header class="p-3 text-bg-light">
@@ -21,15 +22,17 @@
         </ul>
     </div>
 </header>
-
-<article class="mt-3 w-75 m-auto mb-lg-5" th:each="post: ${posts}">
-    <a class="text-decoration-none" th:href="'post/'+${post.getPostId}"><h2 class="blog-post-title mb-1" th:text="${post.getTitle}">Blog Title</h2></a>
-    <p class="blog-post-meta mb-1" th:text="'Created at: '+${#temporals.format(post.getCreatedAt, 'dd-MM-yyyy HH:mm')}">Created At:</p>
-    <p th:if="${post.getModifiedAt() != null}" class="blog-post-meta mb-1" th:text="'Modified at: '+${#temporals.format(post.getModifiedAt(), 'dd-MM-yyyy HH:mm')}">Modified At:</p>
-    <p class="blog-post-meta" th:text="'Posted by: '+${post.getAccount.getUsername}">Posted By </p>
-    <hr>
-    <p th:text="${post.getContent}" class="mb-3 mt-3">Content</p>
-</article>
+<div class="mt-3 w-75 m-auto mb-lg-5">
+    <article th:each="post: ${posts}">
+        <a class="text-decoration-none" th:href="'post/'+${post.getPostId}"><h2 class="blog-post-title mb-1" th:text="${post.getTitle}">Blog Title</h2></a>
+        <script th:inline="javascript">document.write('<span class="blog-post-meta mb-1">Published by: ',moment.unix([[${post.getCreatedAt}]]).fromNow(),'</span>');</script>
+        <script th:if="${post.getModifiedAt() != null}" th:inline="javascript">document.write('<span class="blog-post-meta mb-1">Modified by: ',moment.unix([[${post.getModifiedAt}]]).fromNow(),'</span>');</script>
+        <p class="blog-post-meta" th:text="'Posted by: '+${post.getAccount.getUsername}">Posted By </p>
+        <hr>
+        <span th:if="${post.getContent().length() > 300}" th:text="${post.getContent.substring(0, 300)}+'...    '" class="mb-3 mt-3 text-justify" style="text-align: justify">Content</span><a th:if="${post.getContent().length() > 300}" th:href="'/post/'+${post.getPostId()}" class="text-decoration-none text-primary">Read More</a>
+        <p th:unless="${post.getContent().length() > 300}" th:text="${post.getContent}" class="mb-3 mt-3">Content</p>
+    </article>
+</div>
 
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
     <p class="col-md-4 mb-0 text-muted">&copy; 2022 Company, Inc</p>
@@ -46,6 +49,5 @@
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
     </ul>
 </footer>
-
 </body>
 </html>

@@ -15,23 +15,32 @@
     </div>
     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-evenly mb-md-0">
       <li><a href="/" class="nav-link px-2 link-secondary">Overview</a></li>
-      <li><a th:href="@{/addpost}" class="nav-link px-2 link-dark">Add Post</a></li>
+      <li><a th:href="@{/addpost}" class="nav-link px-2 link-dark">Add New Post</a></li>
       <li th:if="${authName == 'anonymousUser'}"><a href="/login" class="nav-link px-2 link-dark">Log In</a></li>
       <li th:unless="${authName == 'anonymousUser'}"><a href="/logout" class="nav-link px-2 link-dark">Log Out</a></li>
     </ul>
   </div>
 </header>
-<div class="w-75 m-auto">
-  <form name="form" th:action="@{/post}" method="post" th:object="${post}">
 
-    <input class="form-control" type="text" th:field="*{title}" id="title">
-    <label for="title">Title</label>
-    <br>
-    <textarea class="form-control" th:field="*{content}" id="content"></textarea>
-    <label for="content">Content</label>
-    <br>
-    <button class="btn btn-primary" style="width: 100px" type="submit">Add Post</button>
-    <button class="btn btn-secondary" style="width: 100px" type="reset">Clear</button>
+<div class="form-signin w-50 m-auto">
+  <div th:if="${param.error}" class="alert alert-danger">
+    Bad Credentials
+  </div>
+  <form action="/perform-login" method="POST">
+    <h3>Log In</h3>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" name="username" placeholder="Username" id="username">
+      <label for="username">Username</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control" name="password" placeholder="Password" id="password">
+      <label for="password">Password</label>
+    </div>
+    <div class="mb-3">
+      <input type="checkbox" name="remember-me" id="remember-me">Remember Me
+      <label for="remember-me"></label>
+    </div>
+    <button type="submit" class="w-50 btn btn-lg btn-primary">Login</button>
   </form>
 </div>
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
